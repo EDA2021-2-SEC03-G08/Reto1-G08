@@ -36,7 +36,11 @@ los mismos.
 """
 
 # Construccion de modelos
+def addArtists(artists_file):
+    return lt.newList(datastructure='SINGLE_LINKED',filename=artists_file)
 
+def addArtworks(artworks_file):
+    return lt.newList(datastructure='SINGLE_LINKED',filename=artworks_file)
 # Funciones para agregar informacion al catalogo
 
 # Funciones para creacion de datos

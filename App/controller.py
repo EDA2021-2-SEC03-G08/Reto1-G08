@@ -32,6 +32,11 @@ El controlador se encarga de mediar entre la vista y el modelo.
 # Inicialización del Catálogo de libros
 
 # Funciones para la carga de datos
+def loadArtists():
+    return model.addArtists('MoMA/Artists-utf8-small.csv')
+
+def loadArtworks():
+    return model.addArtists('MoMA/Artworks-utf8-small.csv')
 
 # Funciones de ordenamiento
 

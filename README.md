@@ -16,3 +16,10 @@ Este directorio contiene todo el código de base que se entrega para el funciona
 -Test
 Este directorio contiene las pruebas realizadas a los TADs, Estructuras de Datos y Algoritmos.
 
+Integrantes:
+Req 1: Juan David Vasquez Hernandez - jd.vasquezh@uniandes.edu.co - 201914782
+Req 2: Santiago Sierra Rodriguez - s.sierrar@uniandes.edu.co - 201911116
+Req 3: Juan David Vasquez Hernandez - jd.vasquezh@uniandes.edu.co - 201914782
+Req 4: Santiago Sierra Rodriguez - s.sierrar@uniandes.edu.co - 201911116
+Req 5: Juan David Vasquez Hernandez - jd.vasquezh@uniandes.edu.co - 201914782
+Req 6: Santiago Sierra Rodriguez - s.sierrar@uniandes.edu.co - 201911116
