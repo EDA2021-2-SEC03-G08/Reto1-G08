@@ -36,11 +36,18 @@ los mismos.
 """
 
 # Construccion de modelos
-def addArtists(artists_file):
-    return lt.newList(datastructure='SINGLE_LINKED',filename=artists_file)
+def newCatalog():
+    """
+    Inicializa el catálogo de artistas y obras.
+    """
+    catalog = {'artists': None,'artworks': None}
+    return catalog
 
-def addArtworks(artworks_file):
-    return lt.newList(datastructure='SINGLE_LINKED',filename=artworks_file)
+def addArtists(catalog, artists_file):
+    catalog['artists'] = lt.newList(datastructure='SINGLE_LINKED',filename=artists_file)
+
+def addArtworks(catalog, artworks_file):
+    catalog['artworks'] = lt.newList(datastructure='SINGLE_LINKED',filename=artworks_file)
 # Funciones para agregar informacion al catalogo
 
 # Funciones para creacion de datos

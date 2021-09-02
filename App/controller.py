@@ -36,13 +36,14 @@ def initCatalog():
     """
     catalog = model.newCatalog()
     return catalog
-    
 # Funciones para la carga de datos
-def loadArtists():
-    return model.addArtists('MoMA/Artists-utf8-small.csv')
+def loadArtists(catalog):
+    filename = cf.data_dir + 'MoMA/Artists-utf8-small.csv'
+    return model.addArtists(catalog, filename )
 
-def loadArtworks():
-    return model.addArtists('MoMA/Artworks-utf8-small.csv')
+def loadArtworks(catalog):
+    filename = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
+    return model.addArtworks(catalog, filename)
 
 # Funciones de ordenamiento
 

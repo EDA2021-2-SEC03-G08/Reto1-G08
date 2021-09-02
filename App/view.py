@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-
+ 
 import config as cf
 import sys
 import controller
@@ -43,8 +43,6 @@ def printMenu():
     print("5- Clasificar las obras por la nacionalidad de sus creadores")
     print("6- Transportar obras de un departamento")
 
-catalog = None
-
 """
 Menu principal
 """
@@ -53,7 +51,22 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
+        catalog = controller.initCatalog()
+        controller.loadArtists(catalog)
+        controller.loadArtworks(catalog)
+        artists = catalog['artists']
+        artworks = catalog['artworks']
+        print('Total de artistas: ' + str(lt.size(artists)))
+        print('Total de obras: ' + str(lt.size(artworks)))
+        
+        ultimos_artistas = lt.subList(artists,lt.size(artists)-4,3)
+        ultimas_obras = lt.subList(artworks,lt.size(artists)-4,3)
+        print('\nInformación de últimos artistas de la lista:\n')
+        print(ultimos_artistas)
+        print('\nInformación de últimas obras de la lista:\n')
+        print(ultimas_obras)
+        input('Presione "Enter" para continuar.')
+    
     elif int(inputs[0]) == 2:
         pass
 
