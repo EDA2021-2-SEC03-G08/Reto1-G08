@@ -44,15 +44,58 @@ def newCatalog():
     return catalog
 
 def addArtists(catalog, artists_file):
-    catalog['artists'] = lt.newList(datastructure='SINGLE_LINKED',filename=artists_file)
+    catalog['artists'] = lt.newList(datastructure='ARRAY_LIST',filename=artists_file)
 
 def addArtworks(catalog, artworks_file):
-    catalog['artworks'] = lt.newList(datastructure='SINGLE_LINKED',filename=artworks_file)
+    catalog['artworks'] = lt.newList(datastructure='ARRAY_LIST',filename=artworks_file)
+
 # Funciones para agregar informacion al catalogo
 
 # Funciones para creacion de datos
 
 # Funciones de consulta
+def SortChronologically(Artists,StartYear,EndYear):
+    SortedArtists = lt.newList(datastructure='ARRAY_LIST')
+    posList = 0
+    while posList < lt.size(Artists):
+        Artist = lt.getElement(Artists,posList)
+        Year = int(Artist['BeginDate'])
+        if Year >= StartYear and Year <= EndYear:
+            if lt.isEmpty(SortedArtists):
+                lt.addFirst(SortedArtists,Artist)
+            else:
+                Sorted = False
+                posIni = 0
+                posFin = lt.size(SortedArtists)-1
+                while not Sorted:
+                    pos = (posIni + posFin)//2
+                    CompYear = int(lt.getElement(SortedArtists,pos)['BeginDate'])
+                    if Year == CompYear:
+                        lt.insertElement(SortedArtists,Artist,pos)
+                        Sorted = True
+                    elif Year > CompYear:
+                        posIni = pos + 1
+                        if posIni > posFin:
+                            lt.addLast(SortedArtists,Artist)
+                            Sorted = True
+                        elif posIni == posFin:
+                            lt.insertElement(SortedArtists,Artist,pos)
+                            Sorted = True
+                    else:
+                        posFin = pos - 1
+                        if posFin < posIni:
+                            lt.insertElement(SortedArtists,Artist,posIni)
+                            Sorted = True
+                        elif posIni == posFin:
+                            lt.insertElement(SortedArtists,Artist,pos)
+                            Sorted = True
+        posList += 1
+    return SortedArtists
+
+                
+
+
+
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 

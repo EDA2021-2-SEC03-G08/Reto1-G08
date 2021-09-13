@@ -46,5 +46,7 @@ def loadArtworks(catalog):
     return model.addArtworks(catalog, filename)
 
 # Funciones de ordenamiento
+def SortChronologically(Artists,StartYear,EndYear):
+    return model.SortChronologically(Artists,StartYear,EndYear)
 
 # Funciones de consulta sobre el catálogo
