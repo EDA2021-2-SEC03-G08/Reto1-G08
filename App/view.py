@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
- 
+
 import config as cf
 import sys
 import controller
@@ -89,7 +89,7 @@ def printReq1Answer(SortedArtists,StartYear,EndYear):
                 i += 1
     else:
         print('No se encontró ningún artista para el rango de años dado.')
-    input('Presione "Enter" para continuar.')
+    input('Presione "Enter" para continuar.\n')
     
 
 """
@@ -127,7 +127,8 @@ while True:
     elif int(inputs[0]) == 2:
         StartYear = int(input('Brinde el año inicial del rango: '))
         EndYear = int(input('Brinde el año final del rango: '))
-        SortedArtists = controller.SortChronologically(Artists,StartYear,EndYear)
+        artistsInRange = controller.ArtistsInRange(Artists,StartYear,EndYear)
+        SortedArtists = controller.SortChronologically(artistsInRange)
         printReq1Answer(SortedArtists,StartYear,EndYear)
 
     elif int(inputs[0]) == 3:

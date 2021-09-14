@@ -24,7 +24,6 @@
  * Dario Correal - Version inicial
  """
 
-
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -54,45 +53,30 @@ def addArtworks(catalog, artworks_file):
 # Funciones para creacion de datos
 
 # Funciones de consulta
-def SortChronologically(Artists,StartYear,EndYear):
-    SortedArtists = lt.newList(datastructure='ARRAY_LIST')
+def ArtistsInRange(Artists,StartYear,EndYear):
+    artistsInRange = lt.newList(datastructure='ARRAY_LIST')
     posList = 0
     while posList < lt.size(Artists):
         Artist = lt.getElement(Artists,posList)
         Year = int(Artist['BeginDate'])
         if Year >= StartYear and Year <= EndYear:
-            if lt.isEmpty(SortedArtists):
-                lt.addFirst(SortedArtists,Artist)
-            else:
-                Sorted = False
-                posIni = 0
-                posFin = lt.size(SortedArtists)-1
-                while not Sorted:
-                    pos = (posIni + posFin)//2
-                    CompYear = int(lt.getElement(SortedArtists,pos)['BeginDate'])
-                    if Year == CompYear:
-                        lt.insertElement(SortedArtists,Artist,pos)
-                        Sorted = True
-                    elif Year > CompYear:
-                        posIni = pos + 1
-                        if posIni > posFin:
-                            lt.addLast(SortedArtists,Artist)
-                            Sorted = True
-                        elif posIni == posFin:
-                            lt.insertElement(SortedArtists,Artist,pos)
-                            Sorted = True
-                    else:
-                        posFin = pos - 1
-                        if posFin < posIni:
-                            lt.insertElement(SortedArtists,Artist,posIni)
-                            Sorted = True
-                        elif posIni == posFin:
-                            lt.insertElement(SortedArtists,Artist,pos)
-                            Sorted = True
+            lt.addLast(artistsInRange,Artist)
         posList += 1
-    return SortedArtists
+    return artistsInRange
 
-                
+
+def SortChronologically(artistsInRange):
+    for pos1 in range(lt.size(artistsInRange)):
+        minPos = pos1
+        for pos2 in range(pos1+1, lt.size(artistsInRange)):
+            YearMin = lt.getElement(artistsInRange,minPos)['BeginDate'] 
+            Year2 = lt.getElement(artistsInRange,pos2)['BeginDate'] 
+            if Year2 < YearMin:
+                minPos = pos2
+
+        lt.exchange(artistsInRange,minPos,pos1)
+    sortedArtists = artistsInRange
+    return sortedArtists     
 
 
 
