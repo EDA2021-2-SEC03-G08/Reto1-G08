@@ -39,7 +39,7 @@ def initCatalog():
 
 # Funciones para la carga de datos
 def loadArtists(catalog,list_type):
-    filename = cf.data_dir + 'MoMA/Artists-utf8-small.csv'
+    filename = cf.data_dir + 'MoMA/Artists-utf8.csv'
     if(list_type == 1):
         list_type = "ARRAY_LIST"
     else:
@@ -47,14 +47,20 @@ def loadArtists(catalog,list_type):
     return model.addArtists(catalog, filename, list_type)
 
 def loadArtworks(catalog,list_type):
-    filename = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
+    filename = cf.data_dir + 'MoMA/Artworks-utf8.csv'
     return model.addArtworks(catalog, filename, list_type)
 
 # Funciones de ordenamiento
 def ArtistsInRange(Artists,StartYear,EndYear):
     return model.ArtistsInRange(Artists,StartYear,EndYear)
 
-def SortChronologically(artistsInRange,sort_type):
+def SortChronologically(artistsInRange):
+    return model.SortChronologically(artistsInRange)
+
+def ArtworksInRange(Artworks,StartYear,EndYear,list_type,sample_size):
+    return model.ArtworksInRange(Artworks,StartYear,EndYear,list_type,sample_size)
+
+def SortArtwors(artworks,sort_type):
     if(sort_type == 1):
         sort_type = "QUICKSORT"
     elif(sort_type == 2):
@@ -63,7 +69,7 @@ def SortChronologically(artistsInRange,sort_type):
         sort_type = "SHELL"
     else:
         sort_type = "MERGE"
-    return model.SortChronologically(artistsInRange, sort_type)
+    return model.SortArtworks(artworks,sort_type)
 
 
 # Funciones de consulta sobre el catálogo

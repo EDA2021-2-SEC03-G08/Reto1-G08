@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from App.model import SortArtworks
 import config as cf
 import sys
 import controller
@@ -90,6 +91,39 @@ def printReq1Answer(SortedArtists,StartYear,EndYear):
     else:
         print('No se encontró ningún artista para el rango de años dado.')
     input('Presione "Enter" para continuar.\n')
+
+def printReq2Answer(SortedArtworks,StartYear,EndYear):
+    if lt.size(SortedArtworks) > 0:
+        print('Se encontró(aron)', str(lt.size(SortedArtworks)), 'obra(s) entre el año',
+        str(StartYear), 'y', str(EndYear) + '.')
+        input('Presione "Enter" para continuar.')
+        
+        if lt.size(SortedArtworks) > 6:
+            print('Las primeras 3 y 3 últimas obras encontradas fueron:\n')
+            i = 1
+            while i <= 3:
+                artwork = lt.getElement(SortedArtworks,i-1)
+                print(str(i) + '. Título: ' + artwork['Title'] +',', 'Categoría:', str(artwork['Cataloged']) + ',',
+                'Fecha:', artwork['DateAcquired'] + ',', 'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + '.')
+                i += 1
+            print('...')
+            i = lt.size(SortedArtworks)-2
+            while i <= lt.size(SortedArtworks):
+                artwork = lt.getElement(SortedArtworks,i-1)
+                print(str(i) + '. Título: ' + artwork['Title'] +',', 'Categoría:', str(artwork['Cataloged']) + ',',
+                'Fecha:', artwork['DateAcquired'] + ',', 'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + '.')
+                i += 1
+        else:
+            print('La(s) obra(s) encontrada(s) fue(ron):\n')
+            i = 1
+            while i <= lt.size(SortedArtworks):
+                artwork = lt.getElement(SortedArtworks,i-1)
+                print(str(i) + '. Título: ' + artwork['Title'] +',', 'Categoría:', str(artwork['Cataloged']) + ',',
+                'Fecha:', artwork['DateAcquired'] + ',', 'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + '.')
+                i += 1
+    else:
+        print('No se encontró ninguna obra para el rango de años dado.')
+    input('Presione "Enter" para continuar.\n')
     
 
 """
@@ -109,14 +143,6 @@ while True:
                 print("Por favor ingrese una opción válida")
             else:
                 listaValida = True
-                
-        sortValido = False
-        while sortValido:
-            sort_type = int(input("Seleccione el tipo de sort\n (1.) QuickSort (2.) Insert (3.) Shell (4.) Selection (5.) Merge"))
-            if(sort_type != 1 and sort_type != 2 and sort_type != 3 and sort_type != 4 and sort_type != 5):
-                print("Por favor ingrese una opción válida")
-            else:
-                sortValido = True
         
         print("Cargando información de los archivos ....")
         catalog = controller.initCatalog()
@@ -149,7 +175,29 @@ while True:
         printReq1Answer(SortedArtists,StartYear,EndYear)
 
     elif int(inputs[0]) == 3:
-        pass
+        StartYear = input('Brinde la fecha inicial del rango: ')
+        EndYear = input('Brinde la fecha final del rango: ')
+        
+        sampleValido = False
+        while not sampleValido:
+            sample_size = input('Escoja el tamaño de muestra: ')
+            if sample_size.isnumeric():
+                sample_size = int(sample_size)
+                sampleValido = True
+            else:
+                print("Por favor ingrese una opción válida")
+        
+        sortValido = False
+        while not sortValido:
+            sort_type = int(input("Seleccione el tipo de sort\n (1.) QuickSort (2.) Insert (3.) Shell (4.) Selection (5.) Merge"))
+            if(sort_type != 1 and sort_type != 2 and sort_type != 3 and sort_type != 4 and sort_type != 5):
+                print("Por favor ingrese una opción válida")
+            else:
+                sortValido = True
+        artworksInRange = controller.ArtworksInRange(Artworks,StartYear,EndYear,list_type,sample_size)
+        sorted_artworks = SortArtworks(artworksInRange,sort_type)
+
+        printReq2Answer(sorted_artworks,StartYear,EndYear)
 
     elif int(inputs[0]) == 4:
         pass

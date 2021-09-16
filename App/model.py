@@ -25,8 +25,12 @@
  """
 
 import config as cf
+import time
 from DISClib.ADT import list as lt
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import shellsort as ss
+from DISClib.Algorithms.Sorting import quicksort as qs
+from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.Algorithms.Sorting import insertionsort as ins
 assert cf
 
 """
@@ -78,16 +82,41 @@ def SortChronologically(artistsInRange):
     sortedArtists = artistsInRange
     return sortedArtists
 
+def ArtworksInRange(Artworks,StartYear,EndYear,list_type,sample_size):
+    artworksInRange = lt.newList(datastructure=list_type)
+    sub_list = lt.subList(artworksInRange, 1, sample_size)
+    sub_list = sub_list.copy()
+    posList = 0
+    while posList < lt.size(Artworks):
+        Artwork = lt.getElement(Artworks,posList)
+        Year = Artwork['DateAcquired']
+        if Year >= StartYear and Year <= EndYear:
+            lt.addLast(artworksInRange,Artwork)
+        posList += 1
+    return artworksInRange
+
 def cmpArtworkByDateAcquired(artwork1, artwork2):
     """
-Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2
-Args:
-artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
-artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
+    Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menor que el de artwork2
+    Args:
+    artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
+    artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
     """     
+    return artwork1["DateAcquired"] < artwork2['DateAcquired']
 
-    
-
+def SortArtworks(artworksInRange,sort_type):
+    start_time = time.process_time()
+    if sort_type == "QUICKSORT":
+        sortedList = qs.sort(artworksInRange,cmpArtworkByDateAcquired)
+    elif sort_type == "INSERTION":
+        sortedList = ins.sort(artworksInRange,cmpArtworkByDateAcquired)
+    elif sort_type == "SHELL":
+        sortedList = ss.sort(artworksInRange,cmpArtworkByDateAcquired)
+    else:
+        sortedList = ms.sort(artworksInRange,cmpArtworkByDateAcquired)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sortedList
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
