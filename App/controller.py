@@ -38,13 +38,17 @@ def initCatalog():
     return catalog
 
 # Funciones para la carga de datos
-def loadArtists(catalog):
+def loadArtists(catalog,list_type):
     filename = cf.data_dir + 'MoMA/Artists-utf8-small.csv'
-    return model.addArtists(catalog, filename )
+    if(list_type == 1):
+        list_type = "ARRAY_LIST"
+    else:
+        list_type = "SINGLE_LINKED"
+    return model.addArtists(catalog, filename, list_type)
 
-def loadArtworks(catalog):
+def loadArtworks(catalog,list_type):
     filename = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
-    return model.addArtworks(catalog, filename)
+    return model.addArtworks(catalog, filename, list_type)
 
 # Funciones de ordenamiento
 def ArtistsInRange(Artists,StartYear,EndYear):
@@ -52,5 +56,6 @@ def ArtistsInRange(Artists,StartYear,EndYear):
 
 def SortChronologically(artistsInRange):
     return model.SortChronologically(artistsInRange)
+
 
 # Funciones de consulta sobre el catálogo

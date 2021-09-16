@@ -102,6 +102,22 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        listaValida = False
+        while listaValida:
+            list_type = int(input("Seleccione el tipo de representación de lista\n (1.) ARRAY_LIST (2.) LINKED_LIST"))
+            if(list_type != 1 and list_type != 2):
+                print("Por favor ingrese una opción válida")
+            else:
+                listaValida = True
+                
+        sortValido = False
+        while sortValido:
+            sort_type = int(input("Seleccione el tipo de sort\n (1.) QuickSort (2.) Insert (3.) Shell (4.) Selection (5.) Merge"))
+            if(sort_type != 1 and sort_type != 2 and sort_type != 3 and sort_type != 4 and sort_type != 5):
+                print("Por favor ingrese una opción válida")
+            else:
+                sortValido = True
+        
         print("Cargando información de los archivos ....")
         catalog = controller.initCatalog()
         controller.loadArtists(catalog)
@@ -119,6 +135,7 @@ while True:
         print('\nInformación de últimas obras de la lista:\n')
         printLastArtworks(Artworks)
         input('Presione "Enter" para continuar.\n')
+        
     
     elif catalog == None:
         print('Debe cargar los datos antes de seleccionar cualquier opción.')

@@ -42,19 +42,19 @@ def newCatalog():
     catalog = {'artists': None,'artworks': None}
     return catalog
 
-def addArtists(catalog, artists_file):
-    catalog['artists'] = lt.newList(datastructure='ARRAY_LIST',filename=artists_file)
+def addArtists(catalog, artists_file,list_type):
+    catalog['artists'] = lt.newList(datastructure=list_type,filename=artists_file)
 
-def addArtworks(catalog, artworks_file):
-    catalog['artworks'] = lt.newList(datastructure='ARRAY_LIST',filename=artworks_file)
+def addArtworks(catalog, artworks_file, list_type):
+    catalog['artworks'] = lt.newList(datastructure=list_type,filename=artworks_file)
 
 # Funciones para agregar informacion al catalogo
 
 # Funciones para creacion de datos
 
 # Funciones de consulta
-def ArtistsInRange(Artists,StartYear,EndYear):
-    artistsInRange = lt.newList(datastructure='ARRAY_LIST')
+def ArtistsInRange(Artists,StartYear,EndYear,list_type):
+    artistsInRange = lt.newList(datastructure=list_type)
     posList = 0
     while posList < lt.size(Artists):
         Artist = lt.getElement(Artists,posList)
@@ -76,9 +76,17 @@ def SortChronologically(artistsInRange):
 
         lt.exchange(artistsInRange,minPos,pos1)
     sortedArtists = artistsInRange
-    return sortedArtists     
+    return sortedArtists
 
+def cmpArtworkByDateAcquired(artwork1, artwork2):
+    """
+Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2
+Args:
+artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
+artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
+    """     
 
+    
 
 
 # Funciones utilizadas para comparar elementos dentro de una lista
