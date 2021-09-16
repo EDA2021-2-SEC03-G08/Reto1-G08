@@ -54,8 +54,16 @@ def loadArtworks(catalog,list_type):
 def ArtistsInRange(Artists,StartYear,EndYear):
     return model.ArtistsInRange(Artists,StartYear,EndYear)
 
-def SortChronologically(artistsInRange):
-    return model.SortChronologically(artistsInRange)
+def SortChronologically(artistsInRange,sort_type):
+    if(sort_type == 1):
+        sort_type = "QUICKSORT"
+    elif(sort_type == 2):
+        sort_type = "INSERTION"
+    elif(sort_type == 3):
+        sort_type = "SHELL"
+    else:
+        sort_type = "MERGE"
+    return model.SortChronologically(artistsInRange, sort_type)
 
 
 # Funciones de consulta sobre el catálogo
