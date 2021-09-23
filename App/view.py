@@ -138,6 +138,38 @@ def printReq3Answer(artist, artist_info):
         'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + '.')
         i += 1
 
+#Requirement 4
+def printReq4Answer(art_nation,artworks_nation,sorted_nations,artists):
+    top10 = lt.subList(sorted_nations,1,10)
+    print('Nación',' '*10, 'Número de Obras')
+    for nation in lt.iterator(top10):
+        print(nation['Nation'],' '*(16-len(nation['Nation'])), nation['NumbArtworks'])
+    
+    input('Presione "Enter" para continuar.')
+
+    print('\nLa información de las 3 primeras y últimas obras de',art_nation,'es la siguiente:\n')
+    i = 1
+    first_nation = lt.subList(artworks_nation,1,3)
+    for artwork in lt.iterator(first_nation):
+        artist_IDs = artwork['ConstituentID']
+        artists_artworks = controller.findArtist(artists,artist_IDs)
+        artists_artworks = ', '.join(artists_artworks)
+        print(str(i) + '. Título: ' + artwork['Title'] +',', 'Artista(s): ' + artists_artworks +',','Fecha:', artwork['DateAcquired'] + ',', 
+        'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + '.')
+        i += 1
+    
+    print('...')
+    
+    i = lt.size(artworks_nation)-2
+    last_nation = lt.subList(artworks_nation,lt.size(artworks_nation)-2,3)
+    for artwork in lt.iterator(last_nation):
+        artist_IDs = artwork['ConstituentID']
+        artists_artworks = controller.findArtist(artists,artist_IDs)
+        artists_artworks = ', '.join(artists_artworks)
+        print(str(i) + '. Título: ' + artwork['Title'] +',', 'Artista(s): ' + artists_artworks +',','Fecha:', artwork['DateAcquired'] + ',', 
+        'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + '.')
+        i += 1
+
 #Requirement 5
 def printReq5Answer(moveDepartmentAns, department, sort_type, artists,list_type):
     est_price, art2trans, est_weight, artworks_dep = moveDepartmentAns
@@ -261,7 +293,13 @@ while True:
         
 
     elif int(inputs[0]) == 5:
-        pass
+        print('\nSe organizarán las obras por nacionalidad.')
+        artworksNationality,nations = controller.nationalityArtworks(Artworks,Artists,list_type)
+        sort_type = 5
+        sorted_nations,art_nation,artworks_nation = controller.sortNations(artworksNationality,nations,sort_type)
+        printReq4Answer(art_nation,artworks_nation,sorted_nations,Artists)
+        input('Presione "Enter" para continuar.\n')
+
 
     elif int(inputs[0]) == 6:
         department = input('Brinde el nombre del departamento para el cual desea calcular el costo: ')

@@ -153,6 +153,59 @@ def artistMediumInfo(artworks,artist_ID,list_type):
                     mostUsed = medium
     return artist_artworks, artist_mediums, mostUsed, mediums[mostUsed]
 
+#Requirement 4
+def findArtistNationality(artists,artist_IDs):
+    artists_artworks = []
+    for artist_ID in (artist_IDs.replace('[','')).replace(']','').split(','):
+        pos = 0
+        while pos < lt.size(artists):
+            artist = lt.getElement(artists,pos)
+            if artist['ConstituentID'] == artist_ID:
+                artists_artworks.append(artist['Nationality'])
+            pos += 1
+    return artists_artworks
+
+def nationalityArtworks(artworks,artists,list_type):
+    artworksNationality = lt.newList(datastructure=list_type)
+    nations = {}
+    for artwork in lt.iterator(artworks):
+        artists_ID = artwork['ConstituentID']
+        artists_nationality = findArtistNationality(artists,artists_ID)
+        nations_ite = []
+        for nation in artists_nationality:
+            if nation == '':
+                nation = 'Unknown'
+            if nation not in nations_ite:
+                nations_ite.append(nation)
+                if nation not in nations:
+                    nations[nation] = lt.newList(datastructure=list_type)
+                    lt.addLast(nations[nation], artwork)
+                else:
+                    lt.addLast(nations[nation], artwork)
+    
+    for nation in nations:
+        num_artworks = lt.size(nations[nation])
+        nationDict = {'Nation':nation,'NumbArtworks':num_artworks}
+        lt.addLast(artworksNationality,nationDict)
+    return artworksNationality, nations
+
+def cmpArtworkByNumbWorks(nationality1, nationality2): 
+    return nationality1['NumbArtworks'] > nationality2['NumbArtworks']
+
+def sortNations(artworksNationality,nations,sort_type):
+    if sort_type == "QUICKSORT":
+        sortedList = qs.sort(artworksNationality,cmpArtworkByNumbWorks)
+    elif sort_type == "INSERTION":
+        sortedList = ins.sort(artworksNationality,cmpArtworkByNumbWorks)
+    elif sort_type == "SHELL":
+        sortedList = ss.sort(artworksNationality,cmpArtworkByNumbWorks)
+    else:
+        sortedList = ms.sort(artworksNationality,cmpArtworkByNumbWorks)
+    art_nation = lt.getElement(sortedList,0)['Nation']
+    artworks_nation = nations[art_nation]
+    return sortedList,art_nation,artworks_nation
+
+
 #Requirement 5
 def estimatePrice(artwork):
     measurements = ['Diameter (cm)','Height (cm)','Length (cm)','Weight (kg)','Width (cm)']

@@ -87,6 +87,13 @@ def artistMediumInfo(artworks,artist_ID,list_type):
     return model.artistMediumInfo(artworks,artist_ID,list_type)
 
 #Requirement 4
+def nationalityArtworks(artworks,artists,list_type):
+    return model.nationalityArtworks(artworks,artists,list_type)
+
+def sortNations(artworksNationality,nation,sort_type):
+    return model.sortNations(artworksNationality,nation,sort_type)
+
+#Requirement 5
 def checkDepartment(artworks,department):
     return model.checkDeparment(artworks,department)
 
