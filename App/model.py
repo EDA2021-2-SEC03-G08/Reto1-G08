@@ -32,6 +32,7 @@ from DISClib.Algorithms.Sorting import shellsort as ss
 from DISClib.Algorithms.Sorting import quicksort as qs
 from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import selectionsort as scs
 assert cf
 
 """
@@ -53,11 +54,7 @@ def addArtists(catalog, artists_file, list_type):
 def addArtworks(catalog, artworks_file, list_type):
     catalog['artworks'] = lt.newList(datastructure=list_type,filename=artworks_file)
 
-# Funciones para agregar informacion al catalogo
-
-# Funciones para creacion de datos
-
-# Funciones de consulta
+#Requirement 1
 def ArtistsInRange(Artists,StartYear,EndYear,list_type):
     artistsInRange = lt.newList(datastructure=list_type)
     posList = 0
@@ -95,10 +92,8 @@ def findArtist(artists,artist_IDs):
             pos += 1
     return artists_artworks
 
-def ArtworksInRange(Artworks,StartYear,EndYear,list_type,sample_size):
+def ArtworksInRange(Artworks,StartYear,EndYear,list_type):
     artworksInRange = lt.newList(datastructure=list_type)
-    sub_list = lt.subList(artworksInRange, 1, sample_size)
-    sub_list = sub_list.copy()
     posList = 0
     while posList < lt.size(Artworks):
         Artwork = lt.getElement(Artworks,posList)
@@ -116,6 +111,8 @@ def SortArtworks(artworksInRange,sort_type):
         sortedList = ins.sort(artworksInRange,cmpArtworkByDateAcquired)
     elif sort_type == "SHELL":
         sortedList = ss.sort(artworksInRange,cmpArtworkByDateAcquired)
+    elif sort_type == "SELECTION":
+        sortedList = scs.sort(artworksInRange,cmpArtworkByDateAcquired)
     else:
         sortedList = ms.sort(artworksInRange,cmpArtworkByDateAcquired)
     stop_time = time.process_time()
@@ -199,6 +196,8 @@ def sortNations(artworksNationality,nations,sort_type):
         sortedList = ins.sort(artworksNationality,cmpArtworkByNumbWorks)
     elif sort_type == "SHELL":
         sortedList = ss.sort(artworksNationality,cmpArtworkByNumbWorks)
+    elif sort_type == "SELECTION":
+        sortedList = scs.sort(artworksNationality,cmpArtworkByNumbWorks)
     else:
         sortedList = ms.sort(artworksNationality,cmpArtworkByNumbWorks)
     art_nation = lt.getElement(sortedList,0)['Nation']
@@ -336,6 +335,8 @@ def SortArtworksByDate(artworks_dep,sort_type):
         sortedList = ins.sort(artworks_dep,cmpArtworkByDate)
     elif sort_type == "SHELL":
         sortedList = ss.sort(artworks_dep,cmpArtworkByDate)
+    elif sort_type == "SELECTION":
+        sortedList = scs.sort(artworks_dep,cmpArtworkByDate)
     else:
         sortedList = ms.sort(artworks_dep,cmpArtworkByDate)
     return sortedList
@@ -347,11 +348,18 @@ def SortArtworksByPrice(artworks_dep,sort_type):
         sortedList = ins.sort(artworks_dep,cmpArtworkByEstPrice)
     elif sort_type == "SHELL":
         sortedList = ss.sort(artworks_dep,cmpArtworkByEstPrice)
+    elif sort_type == "SELECTION":
+        sortedList = scs.sort(artworks_dep,cmpArtworkByEstPrice)
     else:
         sortedList = ms.sort(artworks_dep,cmpArtworkByEstPrice)
     return sortedList
 
+#Performance & Efficiency
+def createSample(listArt,sample_size):
+    sub_list = lt.subList(listArt, 1, sample_size)
+    sub_list = sub_list.copy()
+    return sub_list
 
-# Funciones utilizadas para comparar elementos dentro de una lista
-
-# Funciones de ordenamiento
+def start_endPerfTest():
+    se_time = time.process_time()
+    return se_time

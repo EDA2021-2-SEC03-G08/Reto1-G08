@@ -55,8 +55,8 @@ def loadArtworks(catalog,list_type):
     return model.addArtworks(catalog, filename, list_type)
 
 #Requirement 1
-def ArtistsInRange(Artists,StartYear,EndYear):
-    return model.ArtistsInRange(Artists,StartYear,EndYear)
+def ArtistsInRange(Artists,StartYear,EndYear,list_type):
+    return model.ArtistsInRange(Artists,StartYear,EndYear,list_type)
 
 def SortChronologically(artistsInRange):
     return model.SortChronologically(artistsInRange)
@@ -65,8 +65,8 @@ def SortChronologically(artistsInRange):
 def findArtist(artists,artist_IDs):
     return model.findArtist(artists,artist_IDs)
 
-def ArtworksInRange(Artworks,StartYear,EndYear,list_type,sample_size):
-    return model.ArtworksInRange(Artworks,StartYear,EndYear,list_type,sample_size)
+def ArtworksInRange(Artworks,StartYear,EndYear,list_type):
+    return model.ArtworksInRange(Artworks,StartYear,EndYear,list_type)
 
 def SortArtworks(artworks,sort_type):
     if(sort_type == 1):
@@ -75,6 +75,8 @@ def SortArtworks(artworks,sort_type):
         sort_type = "INSERTION"
     elif(sort_type == 3):
         sort_type = "SHELL"
+    elif(sort_type == 4):
+        sort_type = "SELECTION"
     else:
         sort_type = "MERGE"
     return model.SortArtworks(artworks,sort_type)
@@ -110,6 +112,8 @@ def SortArtworksByDate(artworks_dep,sort_type):
         sort_type = "INSERTION"
     elif(sort_type == 3):
         sort_type = "SHELL"
+    elif(sort_type == 4):
+        sort_type = "SELECTION"
     else:
         sort_type = "MERGE"
     return model.SortArtworksByDate(artworks_dep,sort_type)
@@ -121,6 +125,15 @@ def SortArtworksByPrice(artworks_dep,sort_type):
         sort_type = "INSERTION"
     elif(sort_type == 3):
         sort_type = "SHELL"
+    elif(sort_type == 4):
+        sort_type = "SELECTION"
     else:
         sort_type = "MERGE"
     return model.SortArtworksByPrice(artworks_dep,sort_type)
+
+#Performance & Efficiency
+def createSample(listArt,sample_size):
+    return model.createSample(listArt,sample_size)
+
+def start_endPerfTest():
+    return model.start_endPerfTest()
