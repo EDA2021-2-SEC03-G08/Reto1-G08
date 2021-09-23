@@ -39,7 +39,7 @@ def initCatalog():
 
 # Funciones para la carga de datos
 def loadArtists(catalog,list_type):
-    filename = cf.data_dir + 'MoMA/Artists-utf8.csv'
+    filename = cf.data_dir + 'MoMA/Artists-utf8-small.csv'
     if(list_type == 1):
         list_type = "ARRAY_LIST"
     else:
@@ -47,20 +47,28 @@ def loadArtists(catalog,list_type):
     return model.addArtists(catalog, filename, list_type)
 
 def loadArtworks(catalog,list_type):
-    filename = cf.data_dir + 'MoMA/Artworks-utf8.csv'
+    filename = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
+    if(list_type == 1):
+        list_type = "ARRAY_LIST"
+    else:
+        list_type = "SINGLE_LINKED"
     return model.addArtworks(catalog, filename, list_type)
 
-# Funciones de ordenamiento
+#Requirement 1
 def ArtistsInRange(Artists,StartYear,EndYear):
     return model.ArtistsInRange(Artists,StartYear,EndYear)
 
 def SortChronologically(artistsInRange):
     return model.SortChronologically(artistsInRange)
 
+#Requirement 2
+def findArtist(artists,artist_IDs):
+    return model.findArtist(artists,artist_IDs)
+
 def ArtworksInRange(Artworks,StartYear,EndYear,list_type,sample_size):
     return model.ArtworksInRange(Artworks,StartYear,EndYear,list_type,sample_size)
 
-def SortArtwors(artworks,sort_type):
+def SortArtworks(artworks,sort_type):
     if(sort_type == 1):
         sort_type = "QUICKSORT"
     elif(sort_type == 2):
@@ -71,5 +79,41 @@ def SortArtwors(artworks,sort_type):
         sort_type = "MERGE"
     return model.SortArtworks(artworks,sort_type)
 
+#Requirement 3
+def encounterArtist(artists,artist_name):
+    return model.encounterArtist(artists,artist_name)
 
-# Funciones de consulta sobre el catálogo
+def artistMediumInfo(artworks,artist_ID,list_type):
+    return model.artistMediumInfo(artworks,artist_ID,list_type)
+
+#Requirement 4
+def checkDepartment(artworks,department):
+    return model.checkDeparment(artworks,department)
+
+def moveDepartment(artworks,department,list_type):
+    return model.moveDepartment(artworks,department,list_type)
+
+def artworksWithDate(artworks_dep,list_type):
+    return model.artworksWithDate(artworks_dep,list_type)
+
+def SortArtworksByDate(artworks_dep,sort_type):
+    if(sort_type == 1):
+        sort_type = "QUICKSORT"
+    elif(sort_type == 2):
+        sort_type = "INSERTION"
+    elif(sort_type == 3):
+        sort_type = "SHELL"
+    else:
+        sort_type = "MERGE"
+    return model.SortArtworksByDate(artworks_dep,sort_type)
+
+def SortArtworksByPrice(artworks_dep,sort_type):
+    if(sort_type == 1):
+        sort_type = "QUICKSORT"
+    elif(sort_type == 2):
+        sort_type = "INSERTION"
+    elif(sort_type == 3):
+        sort_type = "SHELL"
+    else:
+        sort_type = "MERGE"
+    return model.SortArtworksByPrice(artworks_dep,sort_type)

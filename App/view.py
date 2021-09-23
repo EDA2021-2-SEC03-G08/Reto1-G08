@@ -20,7 +20,6 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-from App.model import SortArtworks
 import config as cf
 import sys
 import controller
@@ -124,7 +123,58 @@ def printReq2Answer(SortedArtworks,StartYear,EndYear):
     else:
         print('No se encontró ninguna obra para el rango de años dado.')
     input('Presione "Enter" para continuar.\n')
-    
+
+#Requirement 3
+def printReq3Answer(artist, artist_info):
+    artist_artworks,artist_mediums,mostUsedMedium,mediumArtworks = artist_info
+
+    print('\nEl número de obras creadas por ' + artist + ' es ' + str(artist_artworks) + '.')
+    print('\nEl número de medios usados por ' + artist + ' en sus obras es ' + str(artist_mediums) + '.')
+    print('\nEl medio más usado por ' + artist + ' en sus obras es ' + str(mostUsedMedium) + '.')
+    print('\nLas obras creadas con el medio más usado son: ')
+    i = 1
+    for artwork in lt.iterator(mediumArtworks):
+        print(str(i) + '. Título: ' + artwork['Title'] +',', 'Fecha:', artwork['DateAcquired'] + ',', 
+        'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + '.')
+        i += 1
+
+#Requirement 5
+def printReq5Answer(moveDepartmentAns, department, sort_type, artists,list_type):
+    est_price, art2trans, est_weight, artworks_dep = moveDepartmentAns
+    print('\nSe realizó la estimación del cálculo de costos para mover las obras del departamento ' + department + '.')
+
+    print('\nEl total de obras a trasnportar es de ' + str(art2trans) + '.')
+    print('\nEl peso estimado de las obras transportadas es ' + str(round(est_weight,2)) + ' kg.')
+    print('\nEl precio estimado del servicio es de USD $' + str(round(est_price,2)) + '.')
+    input('Presione "Enter" para continuar.')
+
+    print('\nLas 5 obras más antiguas encontradas son: ')
+    artworks_wdate = controller.artworksWithDate(artworks_dep,list_type)
+    artworks_date = controller.SortArtworksByDate(artworks_wdate,sort_type)
+    i = 1
+    while i <= 5:
+        artwork = lt.getElement(artworks_date,i)
+        artist_IDs = artwork['ConstituentID']
+        artists_artworks = controller.findArtist(artists,artist_IDs)
+        artist_name = ', '.join(artists_artworks )
+        print(str(i) + '. Título: ' + artwork['Title'] +',', 'Artista(s): ' + artist_name  +',','Fecha:', artwork['DateAcquired'] + ',', 
+        'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + ',', 'Costo:', str(round(artwork['EstPrice'],2)) + '.')
+        i += 1
+    input('Presione "Enter" para continuar.')
+
+    print('\nLas 5 obras más costosas encontradas son: ')
+    artworks_price = controller.SortArtworksByPrice(artworks_dep,sort_type)
+    i = 1
+    while i <= 5:
+        artwork = lt.getElement(artworks_price,i)
+        artist_IDs = artwork['ConstituentID']
+        artists_artworks = controller.findArtist(artists,artist_IDs)
+        artists_artworks = ', '.join(artists_artworks)
+        print(str(i) + '. Título: ' + artwork['Title'] +',', 'Artista(s): ' + artists_artworks +',','Fecha:', artwork['DateAcquired'] + ',', 
+        'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + ',', 'Costo:', str(round(artwork['EstPrice'],2)) + '.')
+        i += 1
+
+
 
 """
 Menu principal
@@ -137,8 +187,8 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         listaValida = False
-        while listaValida:
-            list_type = int(input("Seleccione el tipo de representación de lista\n (1.) ARRAY_LIST (2.) LINKED_LIST"))
+        while not listaValida:
+            list_type = int(input("Seleccione el tipo de representación de lista\n (1.) ARRAY_LIST (2.) LINKED_LIST: "))
             if(list_type != 1 and list_type != 2):
                 print("Por favor ingrese una opción válida")
             else:
@@ -146,8 +196,8 @@ while True:
         
         print("Cargando información de los archivos ....")
         catalog = controller.initCatalog()
-        controller.loadArtists(catalog)
-        controller.loadArtworks(catalog)
+        controller.loadArtists(catalog,list_type)
+        controller.loadArtworks(catalog,list_type)
         Artists = catalog['artists']
         Artworks = catalog['artworks']
         print('Total de artistas cargados: ' + str(lt.size(Artists)))
@@ -189,24 +239,40 @@ while True:
         
         sortValido = False
         while not sortValido:
-            sort_type = int(input("Seleccione el tipo de sort\n (1.) QuickSort (2.) Insert (3.) Shell (4.) Selection (5.) Merge"))
+            sort_type = int(input("Seleccione el tipo de sort\n (1.) QuickSort (2.) Insert (3.) Shell (4.) Selection (5.) Merge: "))
             if(sort_type != 1 and sort_type != 2 and sort_type != 3 and sort_type != 4 and sort_type != 5):
                 print("Por favor ingrese una opción válida")
             else:
                 sortValido = True
         artworksInRange = controller.ArtworksInRange(Artworks,StartYear,EndYear,list_type,sample_size)
-        sorted_artworks = SortArtworks(artworksInRange,sort_type)
+        sorted_artworks = controller.SortArtworks(artworksInRange,sort_type)
 
         printReq2Answer(sorted_artworks,StartYear,EndYear)
 
     elif int(inputs[0]) == 4:
-        pass
+        artist_name = input('Brinde el nombre del artista del cual desea obtener información: ')
+        artist_ID = controller.encounterArtist(Artists,artist_name)
+        if artist_ID == 'NotFound':
+            'No se ha encontrado el artista escogido.'
+        else:
+            artist_info = controller.artistMediumInfo(Artworks,artist_ID,list_type)
+        printReq3Answer(artist_name,artist_info)
+        input('Presione "Enter" para continuar.\n')
+        
 
     elif int(inputs[0]) == 5:
         pass
 
     elif int(inputs[0]) == 6:
-        pass
+        department = input('Brinde el nombre del departamento para el cual desea calcular el costo: ')
+        if controller.checkDepartment(Artworks,department):
+            moveDepartmentAns = controller.moveDepartment(Artworks,department,list_type)
+            sort_type = 5
+            printReq5Answer(moveDepartmentAns,department,sort_type,Artists,list_type)
+            input('Presione "Enter" para continuar.\n')
+        else:
+            print('Debe seleccionar un departamento válido.')
+            input('Presione "Enter" para continuar.\n')
 
     else:
         sys.exit(0)
