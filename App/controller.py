@@ -39,7 +39,7 @@ def initCatalog():
 
 # Funciones para la carga de datos
 def loadArtists(catalog,list_type):
-    filename = cf.data_dir + 'MoMA/Artists-utf8-small.csv'
+    filename = cf.data_dir + 'MoMA/Artists-utf8-large.csv'
     if(list_type == 1):
         list_type = "ARRAY_LIST"
     else:
@@ -47,7 +47,7 @@ def loadArtists(catalog,list_type):
     return model.addArtists(catalog, filename, list_type)
 
 def loadArtworks(catalog,list_type):
-    filename = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
+    filename = cf.data_dir + 'MoMA/Artworks-utf8-large.csv'
     if(list_type == 1):
         list_type = "ARRAY_LIST"
     else:
