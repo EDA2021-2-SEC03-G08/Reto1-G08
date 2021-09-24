@@ -84,14 +84,14 @@ def printReq1Answer(SortedArtists,StartYear,EndYear):
             print('...')
             i = lt.size(SortedArtists)-2
             while i <= lt.size(SortedArtists):
-                Artist = lt.getElement(SortedArtists,i-1)
+                Artist = lt.getElement(SortedArtists,i)
                 print(str(i) + '. Nombre: ' + Artist['DisplayName'] +',', 'Año de nacimiento:', str(Artist['BeginDate']) + ',',
                 'Nacionalidad:', Artist['Nationality'] + ',', 'Género:', Artist['Gender'] + '.')
                 i += 1
         else:
             print('El(los) artista(s) encontrado(s) fue(ron):\n')
             i = 1
-            while i < lt.size(SortedArtists):
+            while i <= lt.size(SortedArtists):
                 Artist = lt.getElement(SortedArtists,i)
                 print(str(i) + '. Nombre: ' + Artist['DisplayName'] +',', 'Año de nacimiento:', str(Artist['BeginDate']) + ',',
                 'Nacionalidad:', Artist['Nationality'] + ',', 'Género:', Artist['Gender'] + '.')
@@ -103,7 +103,7 @@ def printReq1Answer(SortedArtists,StartYear,EndYear):
 #Requirement 2
 def printReq2Answer(SortedArtworks,StartYear,EndYear):
     if lt.size(SortedArtworks) > 0:
-        print('Se encontró(aron)', str(lt.size(SortedArtworks)), 'obra(s) entre el año',
+        print('Se encontró(aron)', str(lt.size(SortedArtworks)), 'obra(s) entre la fecha',
         str(StartYear), 'y', str(EndYear) + '.')
         input('Presione "Enter" para continuar.')
         
@@ -111,14 +111,14 @@ def printReq2Answer(SortedArtworks,StartYear,EndYear):
             print('Las primeras 3 y 3 últimas obras encontradas fueron:\n')
             i = 1
             while i <= 3:
-                artwork = lt.getElement(SortedArtworks,i-1)
+                artwork = lt.getElement(SortedArtworks,i)
                 print(str(i) + '. Título: ' + artwork['Title'] +',', 'Categoría:', str(artwork['Cataloged']) + ',',
                 'Fecha:', artwork['DateAcquired'] + ',', 'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + '.')
                 i += 1
             print('...')
             i = lt.size(SortedArtworks)-2
             while i <= lt.size(SortedArtworks):
-                artwork = lt.getElement(SortedArtworks,i-1)
+                artwork = lt.getElement(SortedArtworks,i)
                 print(str(i) + '. Título: ' + artwork['Title'] +',', 'Categoría:', str(artwork['Cataloged']) + ',',
                 'Fecha:', artwork['DateAcquired'] + ',', 'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + '.')
                 i += 1
@@ -126,7 +126,7 @@ def printReq2Answer(SortedArtworks,StartYear,EndYear):
             print('La(s) obra(s) encontrada(s) fue(ron):\n')
             i = 1
             while i <= lt.size(SortedArtworks):
-                artwork = lt.getElement(SortedArtworks,i-1)
+                artwork = lt.getElement(SortedArtworks,i)
                 print(str(i) + '. Título: ' + artwork['Title'] +',', 'Categoría:', str(artwork['Cataloged']) + ',',
                 'Fecha:', artwork['DateAcquired'] + ',', 'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + '.')
                 i += 1

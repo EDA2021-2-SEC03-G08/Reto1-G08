@@ -104,7 +104,6 @@ def ArtworksInRange(Artworks,StartYear,EndYear,list_type):
     return artworksInRange
 
 def SortArtworks(artworksInRange,sort_type):
-    start_time = time.process_time()
     if sort_type == "QUICKSORT":
         sortedList = qs.sort(artworksInRange,cmpArtworkByDateAcquired)
     elif sort_type == "INSERTION":
@@ -115,9 +114,7 @@ def SortArtworks(artworksInRange,sort_type):
         sortedList = scs.sort(artworksInRange,cmpArtworkByDateAcquired)
     else:
         sortedList = ms.sort(artworksInRange,cmpArtworkByDateAcquired)
-    stop_time = time.process_time()
-    elapsed_time_mseg = (stop_time - start_time)*1000
-    return elapsed_time_mseg, sortedList
+    return sortedList
 
 #Requirement 3
 def encounterArtist(artists,artist_name):
