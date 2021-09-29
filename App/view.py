@@ -141,9 +141,11 @@ def printReq3Answer(artist, artist_info):
     print('\nEl número de obras creadas por ' + artist + ' es ' + str(artist_artworks) + '.')
     print('\nEl número de medios usados por ' + artist + ' en sus obras es ' + str(artist_mediums) + '.')
     print('\nEl medio más usado por ' + artist + ' en sus obras es ' + str(mostUsedMedium) + '.')
+    input('Presione "Enter" para continuar.')
     print('\nLas obras creadas con el medio más usado son: ')
+    subList = controller.createSample(mediumArtworks,5)
     i = 1
-    for artwork in lt.iterator(mediumArtworks):
+    for artwork in lt.iterator(subList):
         print(str(i) + '. Título: ' + artwork['Title'] +',', 'Fecha:', artwork['DateAcquired'] + ',', 
         'Medio:', artwork['Medium'] + ',', 'Dimensiones:', artwork['Dimensions'] + '.')
         i += 1
@@ -289,7 +291,16 @@ while True:
 
     elif int(inputs[0]) == 5:
         print('\nSe organizarán las obras por nacionalidad.')
-        artworksNationality,nations = controller.nationalityArtworks(Artworks,Artists,list_type)
+        sampleValido = False
+        while not sampleValido:
+            sample_size = input('Escoja el tamaño de muestra: ')
+            if sample_size.isnumeric():
+                sample_size = int(sample_size)
+                sampleValido = True
+            else:
+                print("Por favor ingrese una opción válida")
+        sample = controller.createSample(Artworks,sample_size)
+        artworksNationality,nations = controller.nationalityArtworks(sample,Artists,list_type)
         sort_type = 5
         sorted_nations,art_nation,artworks_nation = controller.sortNations(artworksNationality,nations,sort_type)
         printReq4Answer(art_nation,artworks_nation,sorted_nations,Artists)
@@ -298,8 +309,17 @@ while True:
 
     elif int(inputs[0]) == 6:
         department = input('Brinde el nombre del departamento para el cual desea calcular el costo: ')
-        if controller.checkDepartment(Artworks,department):
-            moveDepartmentAns = controller.moveDepartment(Artworks,department,list_type)
+        sampleValido = False
+        while not sampleValido:
+            sample_size = input('Escoja el tamaño de muestra: ')
+            if sample_size.isnumeric():
+                sample_size = int(sample_size)
+                sampleValido = True
+            else:
+                print("Por favor ingrese una opción válida")
+        sample = controller.createSample(Artworks,sample_size)
+        if controller.checkDepartment(sample,department):
+            moveDepartmentAns = controller.moveDepartment(sample,department,list_type)
             sort_type = 5
             printReq5Answer(moveDepartmentAns,department,sort_type,Artists,list_type)
             input('Presione "Enter" para continuar.\n')

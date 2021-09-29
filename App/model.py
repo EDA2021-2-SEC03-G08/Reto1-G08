@@ -211,9 +211,9 @@ def estimatePrice(artwork):
     for measurement in measurements:
         if artwork[measurement] != '':
             if measurement == 'Weight (kg)':
-                weight = artwork[measurement]
+                weight = float(artwork[measurement])
             elif measurement == 'Diameter (cm)':
-                radius = artwork[measurement]/200
+                radius = float(artwork[measurement])/200
             else:
                 amount = float(artwork[measurement])
                 enc_info[measurement] = amount/100
