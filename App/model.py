@@ -357,6 +357,11 @@ def createSample(listArt,sample_size):
     sub_list = sub_list.copy()
     return sub_list
 
+def createPercSample(artlist,percentage):
+    sub_list = lt.subList(artlist, 1,lt.size(artlist)*percentage)
+    sub_list = sub_list.copy()
+    return sub_list
+
 def start_endPerfTest():
     se_time = time.process_time()
     return se_time

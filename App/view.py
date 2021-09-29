@@ -353,10 +353,20 @@ while True:
                     print("Por favor ingrese una opción válida\n")
                 else:
                     sortValido = True
+            
+            validPerc = False
+            while not validPerc:
+                perc = float(input("Seleccione el porcentaje de los datos que desea usar: "))
+                if perc > 0 and perc <= 1:
+                    validPerc = True
+                else:
+                    print("Por favor ingrese una opción válida\n")
+            
             sample = controller.createSample(Artworks,sample_size)
             start_time = controller.start_endPerfTest()
             artworksInRange = controller.ArtworksInRange(Artworks,StartYear,EndYear,list_type)
-            sorted_artworks = controller.SortArtworks(artworksInRange,sort_type)
+            samplePerc = controller.createPercSample(artworksInRange,perc)
+            sorted_artworks = controller.SortArtworks(samplePerc,sort_type)
             stop_time = controller.start_endPerfTest()
             total_time = (stop_time - start_time)*1000
             print('El tiempo usado para llevar a cabo el algoritmo es de ' + str(total_time) + ' mseg.')

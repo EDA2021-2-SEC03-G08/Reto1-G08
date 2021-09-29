@@ -135,5 +135,8 @@ def SortArtworksByPrice(artworks_dep,sort_type):
 def createSample(listArt,sample_size):
     return model.createSample(listArt,sample_size)
 
+def createPercSample(artlist,percentage):
+    return model.createPercSample(artlist,percentage)
+
 def start_endPerfTest():
     return model.start_endPerfTest()
